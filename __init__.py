@@ -53,6 +53,7 @@ def hard_target_update(api):
             # restart controller if stopped
             if fermenter.state is False:
                 cbpi.notify("Restarting Auto Mode", str(fermenter.name), timeout=5000)
+                cbpi.app.logger.info("Hard Target Update: restarting auto mode for '{}'".format(fermenter.name))
                 cfg = fermenter.config.copy()
                 cfg.update(dict(api=cbpi, fermenter_id=fermenter.id, heater=fermenter.heater, sensor=fermenter.sensor))
                 instance = cbpi.get_fermentation_controller(fermenter.logic).get("class")(**cfg)
@@ -68,5 +69,6 @@ def hard_target_update(api):
             hard_target = float(fermenter.config['hard_target_temp'])
             if fermenter.target_temp != hard_target:
                 cbpi.notify("Resetting Target Temp", str(fermenter.name), timeout=5000)
+                cbpi.app.logger.info("Hard Target Update: resetting taget temp for '{}'".format(fermenter.name))
                 cbpi.cache.get("fermenter")[key].target_temp = hard_target
                 cbpi.emit("UPDATE_FERMENTER_TARGET_TEMP", {"id": key, "target_temp": hard_target})
