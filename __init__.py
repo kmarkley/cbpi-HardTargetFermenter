@@ -16,14 +16,14 @@ class HardTarget(FermenterController):
 
     hard_target_temp  = Property.Number("Hard Target", True, description="Hard target temperature to prevent accidental changes.")
 
-#-------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------
     def stop(self):
         super(FermenterController, self).stop()
 
         self.heater_off()
         self.cooler_off()
 
-#-------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------
     def run(self):
         while self.is_running():
 
